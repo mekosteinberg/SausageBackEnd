@@ -1,6 +1,6 @@
 # SausageBackEnd
 
-Back end API for SausageApp!
+Back end API for Sausage App connected to MongoDB via Atlas Cluster
 
 ## Technologies
 
@@ -18,6 +18,6 @@ Back end API for SausageApp!
 - bcrypt
 - connect-mongodb-session
 
-## mongodb atlas cluster with CRUD routes
+
 
 
