@@ -11,9 +11,9 @@ Back end API for SausageApp!
 - dotenv
 - cors
 
-## *eventually will implement*
+## *Eventually will implement*
 
-## Authentication W/
+### Authentication Using
 - express-session
 - bcrypt
 - connect-mongodb-session
