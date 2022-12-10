@@ -50,7 +50,7 @@ app.listen(PORT, () => {
 })
 
 mongoose.connect(mongodbURI, () => {
-    console.log('connected to mongo atlas SAUSAGE! ');
+    console.log('SAUSAGE! ');
 });
 
 db.on('error', (err) => console.log(err.message));
