@@ -11,6 +11,7 @@ let PORT = process.env.PORT;
 const db = mongoose.connection;
 const mongodbURI = process.env.MONGODBURI;
 let database = 'sausage'
+mongoose.set('strictQuery', false);
 
 
 //middleware
