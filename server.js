@@ -3,14 +3,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
-const session = require('express-session');
-const MongoDBStore = require('connect-mongodb-session')(session);
+// const session = require('express-session');
+// const MongoDBStore = require('connect-mongodb-session')(session);
 
 // config
 let PORT = process.env.PORT;
 const db = mongoose.connection;
 const mongodbURI = process.env.MONGODBURI;
-let database = 'sausage'
+// let database = 'sausages'
 mongoose.set('strictQuery', false);
 
 
@@ -19,26 +19,26 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const store = new MongoDBStore({
-    uri: process.env.MONGODBURI,
-    databaseName: 'session_test',
-    collectio9ns: 'mySessions'
-}, (error) => {
-    // console.log('store error: ' + error);
-});
+// const store = new MongoDBStore({
+//     uri: process.env.MONGODBURI,
+//     databaseName: 'session_test',
+//     collectio9ns: 'mySessions'
+// }, (error) => {
+//     // console.log('store error: ' + error);
+// });
 
-store.on('error', (error) => {
-    console.log(error);
-});
+// store.on('error', (error) => {
+//     console.log(error);
+// });
 
-app.use(
-    session({
-        secret: process.env.SECRET,
-        store: store,
-        resave: false,
-        saveUninitialized: false
-    })
-)
+// app.use(
+//     session({
+//         secret: process.env.SECRET,
+//         store: store,
+//         resave: false,
+//         saveUninitialized: false
+//     })
+// )
 
 //controllers
 const sausageController = require('./controllers/sausages.js');
