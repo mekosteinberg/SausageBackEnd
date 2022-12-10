@@ -7,7 +7,11 @@ require('dotenv').config();
 // const MongoDBStore = require('connect-mongodb-session')(session);
 
 // config
-let PORT = process.env.PORT;
+let PORT = 3000;
+if(process.env.PORT){
+    PORT = process.env.PORT
+}
+
 const db = mongoose.connection;
 const mongodbURI = process.env.MONGODBURI;
 // let database = 'sausages'
