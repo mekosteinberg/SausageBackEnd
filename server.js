@@ -48,6 +48,9 @@ app.use(cors());
 const sausageController = require('./controllers/sausages.js');
 app.use('/api/sausages', sausageController);
 
+const authController = require('./controllers/auth.js');
+app.use('/api' , authController);
+
 
 app.listen(PORT, () => {
     console.log('eggs, bacon, grits...')
