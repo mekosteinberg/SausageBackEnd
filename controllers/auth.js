@@ -20,11 +20,12 @@ users.post('/register', async (req, res) => {
         if(pwd && pwd?.length < 6) {
             return res.json({err: "Password is required and must be at least 6 characters long"})
         }
+        if (pwd && pwd?.length > 64) {
+            return res.json({err: "Password must be less than 64 characters"});
+        }
     } catch (err) {
-        console.log(err);
+        console.log('caught' + err);
     }
-    
-});
     
     // let userCheck = new Promise((resolve, reject) => {
     //     const existingUser = User.findOne({},{email:email}, (err, foundUser) => {
@@ -39,25 +40,19 @@ users.post('/register', async (req, res) => {
     // userCheck.then((message) => {
     //     console.log(message);
     // });
-
-    /////////////////////////////////////////////////////////
-    //////// this is what i want to happen
         
     
-    //     // if (pwd && pwd?.length > 64) {
-    //     //     return res.json({err: "Password must be less than 64 characters"});
-    //     // }
-    //     res.json({});
     // });
     
     //
-    // req.body.pwd = bcrypt.hashSync(req.body.pwd, bcrypt.genSaltSync(12));
-    // User.create(req.body, (err, createdUser) => {
-    //     res.json(createdUser);
-    //     if(err){
-    //         console.log(err);
-    //     }
-    // });
+    req.body.pwd = bcrypt.hashSync(req.body.pwd, bcrypt.genSaltSync(12));
+    
+    User.create(req.body, (err, createdUser) => {
+        res.json(createdUser);
+    }).catch((err)=>{
+        console.log('caught ' + err);
+    });
+});
 // });
 
 users.get('/users', (req, res) => {
@@ -78,6 +73,25 @@ users.put('/users/:username', (req, res) => {
         res.json(updatedUser);
     });
 })
+
+users.post('/login', async (req, res) => {
+    const { username, pwd, email } = req.body;
+    if (!email || !pwd || !username) {
+        return res.json({err: 'please make sure all fields are correct'})
+    }
+    const user = await User.findOne({email: email});
+    if(!user) {
+        return res.json({err: 'User not found'});
+    }
+    const matchPassword = await bcrypt.compare(pwd, user.pwd);
+    if(matchPassword) {
+        const userSession = { email: user.email }
+        req.session.user = userSession;
+        return res.json({msg: 'You have logged in successfully', userSession });
+    } else {
+        return res.json({ err: 'Invalid Credential'});
+    }
+});
 
 
 
