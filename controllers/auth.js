@@ -4,16 +4,18 @@ const User = require('../models/users.js');
 const bcrypt = require('bcrypt');
 
 users.post('/register', async (req, res) => {
-    const {username, pwd, email} = req.body;
+    const {email, pwd} = req.body;
     try{
         const userExists = await User.findOne({email});
         //validation
         if(userExists) {
             return res.json({err: "email is taken"});
         }
-        if (!username.trim()) {
-            return res.json({err: "Username is required"});
-        }
+        // if (!username.trim()) {
+        //     return res.json({err: "Username is required"});
+        // } 
+        //USERNAMES NO LONGER REQUIRED
+
         if(!email.trim()) {
             return res.json({err: "email is required and must be unique"});
         }
@@ -56,19 +58,19 @@ users.post('/register', async (req, res) => {
 // });
 
 users.get('/users', (req, res) => {
-    User.find({},{username: 1} , (err, allUsers) => {
+    User.find({},{email: 1} , (err, allUsers) => {
         res.json(allUsers);
     });
 });
 
 
-users.get("/user/:username", (req, res) => {
+users.get("/user/:id", (req, res) => {
     User.findById(req.params.id, (err, foundUser) => {
         res.json(foundUser);
     });
 });
 
-users.put('/users/:username', (req, res) => {
+users.put('/users/:id', (req, res) => {
     User.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedUser) => {
         res.json(updatedUser);
     });
@@ -76,7 +78,7 @@ users.put('/users/:username', (req, res) => {
 
 users.post('/login', async (req, res) => {
     const { username, pwd, email } = req.body;
-    if (!email || !pwd || !username) {
+    if (!email || !pwd) {
         return res.json({err: 'please make sure all fields are correct'})
     }
     const user = await User.findOne({email: email});

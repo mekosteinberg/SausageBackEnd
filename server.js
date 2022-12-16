@@ -55,11 +55,11 @@ app.use(
         store: store,
     })
 );
-
-app.use((req, res, next) => {
-    console.log(req.session);
-    next();
-});
+// SHOWING A SESSION 
+// app.use((req, res, next) => {
+//     console.log(req.session);
+//     next();
+// });
 
 app.get('/', (req, res) => {
     res.send('hello ' + JSON.stringify(req.session));
@@ -74,10 +74,6 @@ app.use('/api' , authController);
 
 // const sessionController = require('./controllers/session.js');
 // app.use('/session', sessionController);
-
-
-app.get
-
 
 app.listen(PORT, () => {
     console.log('eggs, bacon, grits...')
