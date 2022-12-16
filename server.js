@@ -55,15 +55,15 @@ app.use(
         store: store,
     })
 );
-// SHOWING A SESSION 
-// app.use((req, res, next) => {
-//     console.log(req.session);
-//     next();
-// });
 
-app.get('/', (req, res) => {
-    res.send('hello ' + JSON.stringify(req.session));
+app.use((req, res, next) => {
+    console.log(req.session);
+    next();
 });
+
+// app.get('/', (req, res) => {
+//     res.send('hello ' + JSON.stringify(req.session));
+// });
 
 //controllers
 const sausageController = require('./controllers/sausages.js');
@@ -72,8 +72,13 @@ app.use('/api/sausages', sausageController);
 const authController = require('./controllers/auth.js');
 app.use('/api' , authController);
 
+//session controller route incomplete **
 // const sessionController = require('./controllers/session.js');
 // app.use('/session', sessionController);
+
+
+app.get
+
 
 app.listen(PORT, () => {
     console.log('eggs, bacon, grits...')
